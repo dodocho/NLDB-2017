@@ -4,4 +4,4 @@ GOOGLE dataset(Filippova et al., Sentence compression by  deletion with LSTMs (2
 Boardcast dataset(Clarke et al., Constraint-based sentence compression an integer programming approach (2006)): http://jamesclarke.net/research/resources<br /> 
 please cite the original papers if you use these datasets.
 
-We employed parser, Parsey McParseface https://github.com/tensorflow/models/tree/master/syntaxnet to yield dependency labels and part-of-speech tags.
+We employed parser, Parsey McParseface https://github.com/tensorflow/models/tree/master/syntaxnet to yield dependency labels and part-of-speech tags. We use the deep learning framework Theano 0.8.2 for our experiment.
