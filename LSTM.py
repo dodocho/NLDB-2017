@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 import theano
 theano.config.floatX= 'float64'
 
@@ -65,9 +64,6 @@ def win(f, posi, win_nb):
     return left_sum+right_sum
     
     
-
-
-
 import collections as col
 label_all=[]
 for father, son in zip(sc_parsed_x1, sc_parsed_y1):
@@ -161,18 +157,6 @@ change_dict={}
 for d in change:
     change_dict[d[:2]]=d[2:]
             
-
-
-
-
-
-
-
-
-
-
-
-
 ###############################################################################
 print "train word2vec using training dataset"+'\n'
 import numpy as np
@@ -245,12 +229,6 @@ for i in range(len(sc_parsed_x1)):
     train_x2.append(temp)
 
 
-
-
-
-
-
-
 print "theano RNN"
 
 import theano
@@ -275,8 +253,6 @@ win_size = 1
 rnn_hdim = 200
 rnn_output_dim = 2
 
-
-
 x_data = []
 for d in train_x2:
     x_data.append(np.array(contextwin(d, win_size),dtype=np.int64))
@@ -292,8 +268,6 @@ for i in range(10000):
             temp.append([1,0])
     y_data.append(np.array(temp,dtype=np.float32))
         
-
-
 embedding = theano.shared(embedding_weights.astype(np.float32))
 #embedding = theano.shared(np.random.uniform(-1.0, 1.0, (nb_voca+1, emb_dim)).astype(np.float32))
 y = tt.fmatrix('y_label')    
@@ -384,14 +358,11 @@ pos_input = tt.lmatrix('pos_input')
 x_pos = embedding_pos[pos_input].reshape((pos_input.shape[0], pos_dim))
 
 ###############################################################################
-
 cat_inputs = tt.concatenate([x, x_dep, x_pos], axis=1)
 
 ini_dim=emb_dim+dep_dim+pos_dim
 
 
-
-###############################################################################
 #LSTM computational graph
 dtype=theano.config.floatX
 
@@ -478,8 +449,6 @@ def sample_weights(sizeX, sizeY):
     return values  
 
 
-
-
 def ortho_weight(n_in, n_hidden, n_i, n_c, n_o, n_f):
     W_xi = theano.shared(sample_weights(n_in, n_i))  
     W_hi = theano.shared(sample_weights(n_hidden, n_i))  
@@ -512,8 +481,6 @@ W_xi4, W_hi4, b_i4, W_xf4, W_hf4, b_f4, W_xc4, W_hc4, b_c4, W_xo4, W_ho4, b_o4, 
 
 W_xi5, W_hi5, b_i5, W_xf5, W_hf5, b_f5, W_xc5, W_hc5, b_c5, W_xo5, W_ho5, b_o5, c05, h05 = ortho_weight(2*n_hidden, n_hidden, n_i, n_c, n_o, n_f)
 W_xi6, W_hi6, b_i6, W_xf6, W_hf6, b_f6, W_xc6, W_hc6, b_c6, W_xo6, W_ho6, b_o6, c06, h06 = ortho_weight(2*n_hidden, n_hidden, n_i, n_c, n_o, n_f)
-
-
 
 
 [h1, _], _ = theano.scan(fn=one_lstm_step1, 
@@ -585,8 +552,6 @@ x_val_set = x_data[1000:2000]
 y_val_set = label[1000:2000]
 
 
-
-
 params = [embedding,
           W_xi1, W_hi1, b_i1, 
           W_xf1, W_hf1, b_f1, 
@@ -624,22 +589,11 @@ params = [embedding,
           W_xo6, W_ho6, b_o6, 
           c06, 
           
-          embedding_dep, 
-                     
-          embedding_pos, 
+          embedding_dep, embedding_pos, 
                          
           W_hy, b_y]
           
-
-
-
-
-
-
 ###############################################################################
-
-
-
 l2_loss=0
 for param in params:
     l2_loss+=(param**2).sum()
@@ -718,7 +672,3 @@ while(n<nb_epoch):
     val_acc1.append(val_acc)
     test_acc1.append(test_acc)
     
-
-
-
-
