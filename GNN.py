@@ -28,9 +28,6 @@ for lines in f.readlines():
         sc_parsed_y.append(temp)
         temp=[]
         
-
-
-
 sc_parsed_x1=[]
 sc_parsed_y1=[]
 for s in sc_parsed_x:
@@ -66,9 +63,6 @@ def win(f, posi, win_nb):
     return left_sum+right_sum
     
     
-
-
-
 import collections as col
 label_all=[]
 for father, son in zip(sc_parsed_x1, sc_parsed_y1):
@@ -162,17 +156,6 @@ change_dict={}
 for d in change:
     change_dict[d[:2]]=d[2:]
 
-
-
-
-
-
-
-
-
-
-
-
 ###############################################################################
 print "train word2vec using training dataset"+'\n'
 import numpy as np
@@ -181,8 +164,6 @@ np.random.seed(1337)  # for reproducibility
 import multiprocessing
 from gensim.models.word2vec import Word2Vec
 from gensim.corpora.dictionary import Dictionary
-
-
 
 import numpy as np
 np.random.seed(1337)  # For Reproducibility
@@ -372,12 +353,9 @@ pos_input = tt.lmatrix('pos_input')
 x_pos = embedding_pos[pos_input].reshape((pos_input.shape[0], pos_dim))
 
 ###############################################################################
-
-
 cat_inputs = tt.concatenate([x, x_dep,x_pos], axis=1)
 
 ini_dim=emb_dim+dep_dim+pos_dim
-
 
 wx1 = theano.shared(np.random.normal(0, 1/np.sqrt(ini_dim), (ini_dim, rnn_hdim)))
 wh1 = theano.shared(np.random.normal(0, 1/np.sqrt(rnn_hdim), (rnn_hdim, rnn_hdim)))
@@ -400,9 +378,6 @@ wx4 = theano.shared(np.random.normal(0, 1/np.sqrt(2*rnn_hdim), (2*rnn_hdim, rnn_
 wh4 = theano.shared(np.random.normal(0, 1/np.sqrt(rnn_hdim), (rnn_hdim, rnn_hdim)))
 h0_4 = theano.shared(np.zeros(rnn_hdim, ))
 bh4 = theano.shared(np.random.normal(0, 1, (rnn_hdim, )))   
-
-
-
 
 def recurrence1(x_t, h_tm1):
     h_t = tt.tanh(#tt.dot(x_t, wx1) * tt.dot(h_tm1, wh1) + 
@@ -523,10 +498,6 @@ hidden_gate, _=theano.scan(fn=gate_nn,
                            sequences=[hidden34, x, x_dep ,x_pos],
                            n_steps=x.shape[0])
 
-
-
-
-
 ###############################################################################
 cat_dim=gated_dim
 
@@ -561,12 +532,6 @@ x_test=x_data[:1000]
 y_test=label[:1000]
 
 
-
-
-
-
-
-
 params = [embedding, wx1, wh1, h0_1, bh1,
                      wx2, wh2, h0_2, bh2, 
                      wx3, wh3, h0_3, bh3, 
@@ -587,12 +552,6 @@ params = [embedding, wx1, wh1, h0_1, bh1,
                      embedding_dep, 
                      embedding_pos, 
                      w, b]
-
-
-
-
-
-
 
 ###############################################################################
 
@@ -646,7 +605,6 @@ test_acc1=[]
 best=0
 import time
 while(n<nb_epoch):
-    
     #learning_rate=learning_rate-n*0.0005
     n+=1
     val_acc=[]
@@ -658,7 +616,6 @@ while(n<nb_epoch):
         if i!=0 and i%7999==0:
             print "epoch:", n
             print i
-            #print "win_size=", win_size
             print "emb_dim=", emb_dim
             print "rnn_hdim=", rnn_hdim
             print "learning_rate:",learning_rate
