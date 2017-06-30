@@ -168,19 +168,8 @@ from gensim.corpora.dictionary import Dictionary
 
 
 import numpy as np
-
 np.random.seed(1337)  # For Reproducibility
 
-
-# Embedding
-max_features =20000
-maxlen = 100
-
-
-# Convolution
-filter_length = 3
-nb_filter = 64
-pool_length = 2
 
 # LSTM
 lstm_output_size = 70
@@ -233,8 +222,6 @@ print "theano RNN"
 
 import theano
 import theano.tensor as tt
-import numpy as np
-np.random.seed(1337)
 from collections import OrderedDict
 
 def contextwin(l, win):
