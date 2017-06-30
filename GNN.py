@@ -165,15 +165,6 @@ import multiprocessing
 from gensim.models.word2vec import Word2Vec
 from gensim.corpora.dictionary import Dictionary
 
-import numpy as np
-np.random.seed(1337)  # For Reproducibility
-
-
-
-# Embedding
-max_features =20000
-maxlen = 100
-
 
 # set parameters:
 emb_dim = 50
@@ -225,8 +216,6 @@ print "theano RNN"
 
 import theano
 import theano.tensor as tt
-import numpy as np
-np.random.seed(1337)
 from collections import OrderedDict
 
 def contextwin(l, win):
